@@ -11,13 +11,13 @@
 // constructors & destructor
 CRunnable::CRunnable(
     const char *id,
-    ::clib::CSynchronizer *sync)
+    CSynchronizer *sync)
 : fIsTerminated(false)
 , fID(id)
 , fSync(sync)
 , fThread(0)
 {
-    fThread = ::clib::CThread::createInstance(this, "");
+    fThread = CThread::createInstance(this, "");
 }
 
 CRunnable::~CRunnable()
@@ -30,14 +30,14 @@ CRunnable::~CRunnable()
 // public member functions
 CRunnable *CRunnable::createInstance(
     const char *id,
-    ::clib::CSynchronizer *sync)
+    CSynchronizer *sync)
 {
     CRunnable *instance = new CRunnable(id, sync);
     instance->start();
     return instance;
 }
 
-// ::clib::IRunnable's method
+// IRunnable's method
 void CRunnable::run()
 {
     while (! isTerminated()) {
@@ -65,7 +65,7 @@ void CRunnable::print()
 {
     // step4 implement here.
     // use fSync.
-    ::clib::CSynchronized sync(fSync);
+    CSynchronized sync(fSync);
     ::std::cout << ::std::endl;
     for (int i = 0; i < 10; i++) {
         ::std::cout << fID << " " << i << ::std::endl;
@@ -77,7 +77,7 @@ void CRunnable::terminate()
 {
     // step2 implement here.
     // use fSync and set fIsTerminated true.
-    ::clib::CSynchronized sync(fSync);
+    CSynchronized sync(fSync);
 	fIsTerminated = true;   
 }
 

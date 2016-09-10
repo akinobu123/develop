@@ -9,7 +9,7 @@ static const char *const kThreadBName("threadB");
 
 int main()
 {
-    ::clib::CSynchronizer *sync = ::clib::CSynchronizer::createInstance();
+    CSynchronizer *sync = CSynchronizer::createInstance();
  
     CRunnable *aRunnable = CRunnable::createInstance(kThreadAName, sync);
 
