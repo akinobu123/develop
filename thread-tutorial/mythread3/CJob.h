@@ -9,12 +9,10 @@
 #include "CSynchronizer.h"
 
 
-class CJob:
-    public CDummyIIT::ICallbackReceiver
+class CJob : public CDummyIIT::ICallbackReceiver
 {
 public:
     CJob();
-
     virtual ~CJob();
 
     // CDummyIIT::ICallbackReceiver's method
