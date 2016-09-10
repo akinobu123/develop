@@ -65,7 +65,7 @@ void CRunnable::print()
 {
     // step4 implement here.
     // use fSync.
-    CSynchronized sync(fSync);
+    ::clib::CSynchronized sync(fSync);
     ::std::cout << ::std::endl;
     for (int i = 0; i < 10; i++) {
         ::std::cout << fID << " " << i << ::std::endl;
@@ -77,7 +77,7 @@ void CRunnable::terminate()
 {
     // step2 implement here.
     // use fSync and set fIsTerminated true.
-    CSynchronized sync(fSync);
+    ::clib::CSynchronized sync(fSync);
 	fIsTerminated = true;   
 }
 
