@@ -1,0 +1,152 @@
+■■■ ::clib::CThread ■■■
+ソースコード：http://mmds03.rdh.fujixerox.co.jp/dsweb/Services/Document-6726557
+
+■clibのクラスに関して
+・::clib::CThread：
+　スレッドを扱うクラス。
+　start呼び出しされるとコンストラクタで渡された::clib::IRunnableのrun()を別スレッドで呼び出します。
+　同一インスタンスでstart()は一度しか呼べません。スレッドの終了はjoin()で待ち合わせ可能です。
+・::clib::IRunnable：
+　::clib::CThreadの記述参照。
+・::clib::CSynchronizer：
+　mutexをラッパーしたクラス。排他(lock/unlock)を行います。
+　（同一スレッド内であれば、lockしている状態で、同一::clib::CSynchronizerのlockを呼び出しても処理が継続可能。）
+・::clib::CSynchronized：
+　::clib::CSynchronizerのヘルパークラス。
+　スコープに入ると::clib::CSynchronizerのlockを呼び出し、スコープを出るとunlockを呼び出します。
+　後述の「★排他について★」参照。
+
+■演習用クラスに関して
+・CRunnable：
+　::clib::IRunnableを継承したクラス。メンバフィールドに::clib::CThreadを保持する。
+　実装内容を見て理解してください。
+・main：
+　main関数定義。
+参考：http://mmds03.rdh.fujixerox.co.jp/dsweb/Services/Document-6726559
+
+■その他クラスに関して
+・特に理解する必要はありません。
+
+
+
+■■ 演習 ■■
+clibには並列処理を行うため、CThreadクラスがあります。
+ここでは、並列処理がどのようなものかを理解するためのページです。演習を行い理解をしてください。
+演習用サンプルソースを修正し、2つのスレッドを起動して、10個ずつ名前を出力するプログラムを作ります。
+main.cppも読んで理解をして、演習をしてください。
+
+
+■step1 Threadの起動
+::clib::CThread::start()を呼び出すと、スレッドが起動し、CTreadコンストラクタに渡した::clib::IRunnableのrunが処理されます。
+CRunnable::createInstance()で、CRunnableのインスタンスを生成した後、生成したインスタンスのstart()を呼び出しています。
+CRunnable::start()で::clib::CThread::start()を呼び出してください。
+実装修正完了後は、ソースコードをコンパイルし動作確認してください。
+(Makefileを作成していません。すみませんが↓のコマンドでコンパイルしてください。)
+
+ > rm a.out; g++ -g -pthread -rdynamic *; rm *.gch
+
+（再コンパイルする際は、hまたはcppファイル以外は削除してください。）
+
+ > ./a.out
+
+以下の出力が繰り返されることを確認してください。終了はCtrl + C。
+threadA 0
+threadA 1
+threadA 2
+threadA 3
+threadA 4
+threadA 5
+threadA 6
+threadA 7
+threadA 8
+threadA 9
+
+
+■step2 Threadの終了
+CRunnable::isTerminated()で変数fIsTerminatedをreturnします。
+CRunnableのデストラクタでterminate()を呼び出しています。
+terminate()で、fIsTerminatedをtrueに書き換えるとrunのwhileを抜けます。
+（CRunnableのデストラクタでは、terminate()呼び出し後、::clib::CThread::join()を呼び出して、
+　thread処理の完了を待ち合わせてからfThreadをdeleteしています。）
+CRunnable::isTerminated()、terminate()を実装してください。
+注）fIsTerminatedはCRunnableのスレッドで参照され、mainスレッドで書き換えられるので排他が必要です。
+
+　★排他について★
+　複数のスレッドから参照・書換えされるリソースは、書換え中に参照されると値が不定となるため思わぬ不正な動作を生みます。
+　そのようなリソースを扱うスコープは1つのスレッドしかリソースにアクセスできないように排他する必要があります。
+　::clib::CSynchronizerを利用すると、排他制御を行えます。以下のように排他したい
+　(並列で処理してほしくない)スコープはCSynchronizer::lock()呼び出しをし、排他したいスコープを抜ける際にunlock()します。
+　
+　 void CHoge::hoge()
+　 {
+　     fSync->lock(); // fSyncは::clib::CSynchronizer
+　     ....
+　     fSync->unlock();
+　 }
+　
+　排他したいメソッド内で条件分岐が発生しreturnしたくなった場合、条件分岐の度にunlock()呼び出しをする必要が生じます。
+　ヘルパークラスの::clib::CSynchronizedを利用すると、lock/unlockをスコープに入ったとき/出たときに
+　自動で行ってくれるため便利です。使い方は以下の通り
+　
+　 void CHoge::hoge()
+　 {
+　     ::clib::CSynchronized sync(fSync); // syncのコンストラクタでfSync->lock()呼び出しをしてくれる。
+　     if (xxx) {
+　         return; // syncのデストラクタが呼ばれ、デストラクタ内でfSync->unlock()呼び出しをしてくれる。
+　     }
+　     ....
+　 }
+
+実装修正完了後、再度ソースコードをコンパイルし動作確認してください。
+Ctrl + Cせずにプログラムが終了することを確認してください。
+
+
+■step3 複数Threadでの出力確認
+main関数内でsleepの前にCRunnableをもう一つ生成し、sleep後に生成したCRunnableをdeleteしてください。
+CRunnable::createInstance()の第一引数はkThreadBNameを、
+第二引数はmainの先頭で生成しているCSynchronizerを利用してください。
+実装修正完了後、再度ソースコードをコンパイルし動作確認してください。
+以下の通りthreadAとthreadBの出力が入れ子になっていることを確認してください。
+threadA 0
+threadA 1
+threadB 7
+threadB 8
+threadA 2
+threadA 3
+threadB 9
+threadA 4
+threadA 5
+threadA 6
+threadA 7
+threadA 8
+threadA 9
+
+
+■step4 排他の確認
+CRunnable::print()のスコープで排他してください。
+実装修正完了後、再度ソースコードをコンパイルし動作確認してください。
+実装修正完了後、再度ソースコードをコンパイルし動作確認してください。
+以下の通りthreadAとthreadBの出力が入れ子になってい "ない" ことを確認してください。
+threadB 0
+threadB 1
+threadB 2
+threadB 3
+threadB 4
+threadB 5
+threadB 6
+threadB 7
+threadB 8
+threadB 9
+
+threadA 0
+threadA 1
+threadA 2
+threadA 3
+threadA 4
+threadA 5
+threadA 6
+threadA 7
+threadA 8
+threadA 9
+
+
