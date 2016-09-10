@@ -12,4 +12,4 @@ public:
     virtual void run() = 0;
 };
 
-#endif /* _CLIB_I_RUNNABLE_H */
+#endif /* _I_RUNNABLE_H */

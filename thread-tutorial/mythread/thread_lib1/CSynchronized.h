@@ -27,4 +27,4 @@ private:
     void *operator new(size_t size);
 };
 
-#endif /* _CLIB_C_SYNCHRONIZED_H */
+#endif /* _C_SYNCHRONIZED_H */
