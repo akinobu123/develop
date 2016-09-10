@@ -1,6 +1,5 @@
 // File: CSynchronized.h - last edit:
 
-// Copyright(C) 2015 by Fuji Xerox Co. Ltd. All rights reserved.
 
 #ifndef _CLIB_C_SYNCHRONIZED_H
 #define _CLIB_C_SYNCHRONIZED_H

@@ -1,7 +1,5 @@
 // File: CRunnable.h      - last edit:
 
-// Copyright(C) 2015 by Fuji Xerox Co., Ltd. All rights reserved.
-
 #ifndef _C_RUNNABLE_H
 #define _C_RUNNABLE_H
 

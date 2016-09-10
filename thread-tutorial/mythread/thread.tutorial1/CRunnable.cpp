@@ -1,8 +1,3 @@
-// File: CRunnable.cpp      - last edit:
-// Norihiko Tsuyuzaki    30-Jun-2015
-
-// Copyright(C) 2015 by Fuji Xerox Co., Ltd. All rights reserved.
-
 #include <iostream>
 #include "CRunnable.h"
 #include "CSynchronized.h"

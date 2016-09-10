@@ -1,7 +1,5 @@
 // File: CSynchronized.cpp    - last edit:
 
-// Copyright(C) 2015 by Fuji Xerox Co. Ltd. All rights reserved.
-
 #include <assert.h>
 #include "CSynchronized.h"
 
