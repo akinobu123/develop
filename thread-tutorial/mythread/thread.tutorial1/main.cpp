@@ -2,7 +2,7 @@
 #include "CSynchronizer.h"
 #include "CSynchronized.h"
 #include "CRunnable.h"
-#include "unistd.h"
+#include <unistd.h>
 
 static const char *const kThreadAName("threadA");
 static const char *const kThreadBName("threadB");
