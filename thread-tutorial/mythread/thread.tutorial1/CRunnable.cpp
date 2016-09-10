@@ -6,6 +6,7 @@
 #include <iostream>
 #include "CRunnable.h"
 #include "CSynchronized.h"
+#include <unistd.h>
 
 // constructors & destructor
 CRunnable::CRunnable(
