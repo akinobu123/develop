@@ -10,28 +10,28 @@
 #include "CThread.h"
 
 class CRunnable:
-    public ::clib::IRunnable
+    public IRunnable
 {
 private:
     CRunnable(
         const char *id,
-        ::clib::CSynchronizer *sync);
+        CSynchronizer *sync);
 
 public:
     virtual ~CRunnable();
 
     static CRunnable *createInstance(
         const char *id,
-        ::clib::CSynchronizer *sync);
+        CSynchronizer *sync);
 
-    // ::clib::IRunnable's method
+    // IRunnable's method
     virtual void run();
 
 private:
     bool fIsTerminated;
     ::std::string fID;
-    ::clib::CSynchronizer *fSync;
-    ::clib::CThread *fThread;
+    CSynchronizer *fSync;
+    CThread *fThread;
 
     void start();
 
