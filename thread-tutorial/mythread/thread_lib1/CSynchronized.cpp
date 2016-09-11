@@ -1,5 +1,6 @@
 // File: CSynchronized.cpp    - last edit:
 
+#include <iostream>
 #include <assert.h>
 #include "CSynchronized.h"
 
