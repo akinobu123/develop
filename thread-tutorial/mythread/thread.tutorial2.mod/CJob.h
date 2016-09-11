@@ -4,6 +4,7 @@
 #define _C_JOB_H
 
 #include "CDummyIIT.h"
+#include "CMutex.h"
 #include "CSynchronizer.h"
 
 
@@ -15,18 +16,17 @@ public:
 
     virtual ~CJob();
 
-    // CDummyIIT::ICallbackReceiver's method
-    virtual void onScanCompleted();
-
     // CJob's method
     void execute();
 
+    // CDummyIIT::ICallbackReceiver's method
+    virtual void onScanCompleted();
+
 private:
     bool fIsScanCompleted;
+    CMutex *fMutex;
     CSynchronizer *fSync;
     CDummyIIT *fDummyIIT;
-
-    void getReadyToScan();
 
     void waitForScanCompleted();
 

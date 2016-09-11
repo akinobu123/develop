@@ -5,7 +5,6 @@
 
 #include "IRunnable.h"
 #include "CThread.h"
-#include "CSynchronizer.h"
 #include <unistd.h>
 
 class CDummyIIT:
@@ -21,8 +20,7 @@ public:
         virtual void onScanCompleted() = 0;
     };
 
-    CDummyIIT(
-        ICallbackReceiver *callbackReceiver, CSynchronizer* sync);
+    CDummyIIT(ICallbackReceiver *callbackReceiver);
 
     virtual ~CDummyIIT();
 
@@ -34,7 +32,6 @@ public:
     void startScan();
 
 private:
-    CSynchronizer *fSync;
     CThread *fThread;
     ICallbackReceiver *fCallbackReceiver;
 

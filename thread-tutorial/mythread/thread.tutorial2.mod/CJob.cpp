@@ -2,15 +2,16 @@
 
 #include <iostream>
 #include "CJob.h"
-#include "CJobStat.h"
-#include "CSynchronized.h"
+#include "CMutexAuto.h"
 
 // constructors & destructor
 CJob::CJob()
 : fIsScanCompleted(false)
+, fMutex(0)
 , fSync(0)
 , fDummyIIT(0)
 {
+    fMutex = CMutex::createInstance();
     fSync = CSynchronizer::createInstance();
     fDummyIIT = new CDummyIIT(this, fSync);
 }
@@ -19,6 +20,24 @@ CJob::~CJob()
 {
     delete fDummyIIT;
     delete fSync;
+    delete fMutex;
+}
+
+// CJob's method
+void CJob::execute()
+{
+    ::std::cout << "CJob::execute() : before startScan()" << ::std::endl;
+
+    fDummyIIT->startScan();
+    
+    ::std::cout << "CJob::execute() : after startScan()" << ::std::endl;
+
+    waitForScanCompleted();
+    
+    ::std::cout << "CJob::execute() : after waitForScanCompleted()" << ::std::endl;
+    
+    // ... do IOT process etc.
+
 }
 
 // public member functions
@@ -26,48 +45,32 @@ CJob::~CJob()
 void CJob::onScanCompleted()
 {
     // implement here.
-    ::std::cout << "CJob::onScanCompleted before sync" << ::std::endl;
-    CSynchronized sync(fSync);
-    ::std::cout << "CJob::onScanCompleted after sync" << ::std::endl;
+    ::std::cout << "CJob::onScanCompleted() : before mutexAuto" << ::std::endl;
+    CMutexAuto mutexAuto(fMutex);
+    ::std::cout << "CJob::onScanCompleted() : after mutexAuto" << ::std::endl;
     fIsScanCompleted = true;
-    ::std::cout << "CJob::onScanCompleted complete flag setted" << ::std::endl;
-    sync.notifyAll();
-    ::std::cout << "CJob::onScanCompleted after notifyAll" << ::std::endl;
-}
-
-// CJob's method
-void CJob::execute()
-{
-    ::std::cout << "CJob:execute requested" << ::std::endl;
-
-    fDummyIIT->startScan();
-    
-    ::std::cout << "CJob:scan requested" << ::std::endl;
-
-    waitForScanCompleted();
-    
-    ::std::cout << "CJob:scan completed" << ::std::endl;
-    
-    // ... do IOT process etc.
-
+    ::std::cout << "CJob::onScanCompleted() : complete flag setted" << ::std::endl;
+    fSync.notifyAll();
+    ::std::cout << "CJob::onScanCompleted() : after notifyAll" << ::std::endl;
 }
 
 // private member functions
 void CJob::waitForScanCompleted()
 {
-    ::std::cout << "CJob:wait start" << ::std::endl;
+    ::std::cout << "CJob::waitForScanCompleted() : start" << ::std::endl;
 
     // implement here.
-    CSynchronized sync(fSync);
+    CMutexAuto mutexAuto(fMutex);
+    
     while (! fIsScanCompleted) {
 
-            ::std::cout << "CJob:wait on-loop (before wait)" << ::std::endl;
+        ::std::cout << "CJob::waitForScanCompleted() : on-loop (before wait)" << ::std::endl;
 
-	    sync.wait();
+	    fSync.wait();
 
-            ::std::cout << "CJob:wait on-loop (after wait)" << ::std::endl;
+        ::std::cout << "CJob::waitForScanCompleted() : on-loop (after wait)" << ::std::endl;
     }
 
-    ::std::cout << "CJob:wait end" << ::std::endl;
+    ::std::cout << "CJob::waitForScanCompleted() : end" << ::std::endl;
 }
 

@@ -4,14 +4,12 @@
 #include <unistd.h>
 #include <assert.h>
 #include "CDummyIIT.h"
-#include "CSynchronized.h"
 
 // constructors & destructor
 CDummyIIT::CDummyIIT(
-    ICallbackReceiver *callbackReceiver, CSynchronizer* sync)
+    ICallbackReceiver *callbackReceiver)
 : fThread(0)
 , fCallbackReceiver(callbackReceiver)
-, fSync(sync)
 {
     // Nothing to do.
 }
@@ -37,9 +35,7 @@ void CDummyIIT::run()
 
     ::std::cout << "CDummyIIT:scan completed" << ::std::endl;
     
-//    CSynchronized sync(fSync);
     fCallbackReceiver->onScanCompleted();
-//    sync.notifyAll();
 }
 
 // CDummyIIT's method
