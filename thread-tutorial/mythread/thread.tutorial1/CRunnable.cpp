@@ -51,6 +51,8 @@ bool CRunnable::isTerminated()
 {
     CMutexAuto mutexAuto(fMutex);
 
+    ::std::cout << fID << " test flag" << ::std::endl;
+
     return fIsTerminated;
 }
 
@@ -68,6 +70,8 @@ void CRunnable::print()
 void CRunnable::terminate()
 {
     CMutexAuto mutexAuto(fMutex);
+
+    ::std::cout << fID << " set flag" << ::std::endl;
 
 	fIsTerminated = true;   
 }
