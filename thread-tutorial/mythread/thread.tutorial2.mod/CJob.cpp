@@ -26,9 +26,13 @@ CJob::~CJob()
 void CJob::onScanCompleted()
 {
     // implement here.
+    ::std::cout << "CJob::onScanCompleted before sync" << ::std::endl;
     CSynchronized sync(fSync);
+    ::std::cout << "CJob::onScanCompleted after sync" << ::std::endl;
     fIsScanCompleted = true;
+    ::std::cout << "CJob::onScanCompleted complete flag setted" << ::std::endl;
     sync.notifyAll();
+    ::std::cout << "CJob::onScanCompleted after notifyAll" << ::std::endl;
 }
 
 // CJob's method
