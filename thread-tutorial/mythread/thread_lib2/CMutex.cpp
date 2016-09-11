@@ -8,16 +8,16 @@
 // constructors & destructor
 CMutex::CMutex()
 {
-	::std::cout << "CMutex::CMutex() : before init" << ::std::endl;
-    if (pthread_mutex_init(&fMutex, NULL) != 0)  assert(false);
-	::std::cout << "CMutex::CMutex() : after init" << ::std::endl;
+    if (pthread_mutex_init(&fMutex, NULL) != 0) {
+        assert(false);
+    }
 }
 
 CMutex::~CMutex()
 {
-	::std::cout << "CMutex::~CMutex() : before destroy" << ::std::endl;
-    if (pthread_mutex_destroy(&fMutex) != 0)  assert(false);
-	::std::cout << "CMutex::~CMutex() : after destroy" << ::std::endl;
+    if (pthread_mutex_destroy(&fMutex) != 0) {
+        assert(false);
+    }
 }
 
 // Gets a lock

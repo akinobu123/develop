@@ -15,8 +15,6 @@ public:
     void notifyAll();
 
 private:
-    bool wait(int msec);
-
     pthread_t fThreadID;
     pthread_mutex_t fMutex;
     pthread_cond_t fCond;

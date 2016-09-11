@@ -31,7 +31,6 @@ void CThread::start()
     int ret;
     ret = pthread_create(&fThreadId, NULL, CThread::func, (void *)this);
     assert(ret == 0);
-
 }
 
 
