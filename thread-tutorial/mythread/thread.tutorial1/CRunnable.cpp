@@ -1,15 +1,15 @@
 #include <iostream>
 #include "CRunnable.h"
-#include "CSynchronized.h"
+#include "CMutexAuto.h"
 #include <unistd.h>
 
 // constructors & destructor
 CRunnable::CRunnable(
     const char *id,
-    CSynchronizer *sync)
+    CMutex *mutex)
 : fIsTerminated(false)
 , fID(id)
-, fSync(sync)
+, fMutex(mutex)
 , fThread(0)
 {
     fThread = CThread::createInstance(this, "");
@@ -25,9 +25,9 @@ CRunnable::~CRunnable()
 // public member functions
 CRunnable *CRunnable::createInstance(
     const char *id,
-    CSynchronizer *sync)
+    CMutex *mutex)
 {
-    CRunnable *instance = new CRunnable(id, sync);
+    CRunnable *instance = new CRunnable(id, mutex);
     instance->start();
     return instance;
 }
@@ -52,15 +52,15 @@ void CRunnable::start()
 bool CRunnable::isTerminated()
 {
     // step2 implement here.
-    // use fSync and return fIsTerminated.
+    // use fMutex and return fIsTerminated.
     return fIsTerminated;
 }
 
 void CRunnable::print()
 {
     // step4 implement here.
-    // use fSync.
-    CSynchronized sync(fSync);
+    // use fMutex.
+    CMutexAuto mutexAuto(fMutex);
     ::std::cout << ::std::endl;
     for (int i = 0; i < 10; i++) {
         ::std::cout << fID << " " << i << ::std::endl;
@@ -71,8 +71,8 @@ void CRunnable::print()
 void CRunnable::terminate()
 {
     // step2 implement here.
-    // use fSync and set fIsTerminated true.
-    CSynchronized sync(fSync);
+    // use fMutex and set fIsTerminated true.
+    CMutexAuto mutexAuto(fMutex);
 	fIsTerminated = true;   
 }
 

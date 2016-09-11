@@ -4,23 +4,22 @@
 #define _C_RUNNABLE_H
 
 #include <string>
-#include "CSynchronizer.h"
+#include "CMutex.h"
 #include "CThread.h"
 
-class CRunnable:
-    public IRunnable
+class CRunnable : public IRunnable
 {
 private:
     CRunnable(
         const char *id,
-        CSynchronizer *sync);
+        CMutex *mutex);
 
 public:
     virtual ~CRunnable();
 
     static CRunnable *createInstance(
         const char *id,
-        CSynchronizer *sync);
+        CMutex *mutex);
 
     // IRunnable's method
     virtual void run();
@@ -28,7 +27,7 @@ public:
 private:
     bool fIsTerminated;
     ::std::string fID;
-    CSynchronizer *fSync;
+    CMutex *fMutex;
     CThread *fThread;
 
     void start();
