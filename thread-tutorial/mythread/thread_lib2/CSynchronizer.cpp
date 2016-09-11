@@ -9,42 +9,28 @@
 // constructors & destructor
 CSynchronizer::CSynchronizer()
 {
-    if (pthread_mutex_init(&fLock, NULL) != 0)  assert(false);
-    if (pthread_mutex_init(&fLockForWait, NULL) != 0)  assert(false);
-    if (pthread_mutex_init(&fLockForNotify, NULL) != 0)  assert(false);
-    if (pthread_cond_init(&fWait, NULL) != 0)  assert(false);
+	::std::cout << "CSynchronizer::CSynchronizer() : before pthread_xxx_init()" << ::std::endl;
+
+    if (pthread_mutex_init(&fMutex, NULL) != 0)  assert(false);
+    if (pthread_cond_init(&fCond, NULL) != 0)  assert(false);
+
+	::std::cout << "CSynchronizer::CSynchronizer() : after pthread_xxx_init()" << ::std::endl;
 }
 
 CSynchronizer::~CSynchronizer()
 {
-    if (pthread_mutex_destroy(&fLock) != 0)  assert(false);
-    if (pthread_mutex_destroy(&fLockForWait) != 0)  assert(false);
-    if (pthread_mutex_destroy(&fLockForNotify) != 0)  assert(false);
-    if (pthread_cond_destroy(&fWait) != 0)  assert(false);
+	::std::cout << "CSynchronizer::~CSynchronizer() : before pthread_xxx_destroy()" << ::std::endl;
+
+    if (pthread_mutex_destroy(&fMutex) != 0)  assert(false);
+    if (pthread_cond_destroy(&fCond) != 0)  assert(false);
+
+	::std::cout << "CSynchronizer::~CSynchronizer() : after pthread_xxx_destroy()" << ::std::endl;
 }
 
 // public member functions
 CSynchronizer* CSynchronizer::createInstance()
 {
     return new CSynchronizer();
-}
-
-// Gets a lock
-void CSynchronizer::lock()
-{
-    if (pthread_mutex_lock(&fLock) != 0) {
-        assert(false);
-        return;
-    }
-}
-
-// Releases a lock
-void CSynchronizer::unlock()
-{
-    if (pthread_mutex_unlock(&fLock) != 0) {
-        assert(false);
-        return;
-    }
 }
 
 // Release a lock, then waits until either some other thread invokes the notify
@@ -56,10 +42,11 @@ void CSynchronizer::wait()
 
 bool CSynchronizer::wait(int msec)
 {
+	::std::cout << "CSynchronizer::wait() : before pthread_mutex_lock()" << ::std::endl;
+
     assert(msec >= 0);
 
-    if (pthread_mutex_lock(&fLockForWait) != 0) {
-//    if (pthread_mutex_lock(&fLock) != 0) {
+    if (pthread_mutex_lock(&fMutex) != 0) {
         assert(false);
         return false;
     }
@@ -67,8 +54,7 @@ bool CSynchronizer::wait(int msec)
     bool result = true;
     if (msec <= 0) {
     	::std::cout << "CSynchronizer::wait() : before pthread_cond_wait()" << ::std::endl;
-        if (pthread_cond_wait(&fWait, &fLockForWait) != 0) {
-//        if (pthread_cond_wait(&fWait, &fLock) != 0) {
+        if (pthread_cond_wait(&fCond, &fMutex) != 0) {
             assert(false);
             return false;
         }
@@ -88,22 +74,23 @@ bool CSynchronizer::wait(int msec)
 
         timeout.tv_nsec = usec * 1000;  // micro-sec * 1000 = nano-sec
 
-        int retcode = pthread_cond_timedwait(&fWait, &fLockForWait, &timeout);
+        int retcode = pthread_cond_timedwait(&fCond, &fMutex, &timeout);
         if (retcode == ETIMEDOUT) {
             result = false;
         } else if ( retcode < 0) {
-            pthread_mutex_unlock(&fLockForWait);
+            pthread_mutex_unlock(&fMutex);
             assert(false);
             return false;
         }
 */
     }
 
-    if (pthread_mutex_unlock(&fLockForWait) != 0) {
-//    if (pthread_mutex_unlock(&fLock) != 0) {
+    if (pthread_mutex_unlock(&fMutex) != 0) {
         assert(false);
         return false;
     }
+    
+	::std::cout << "CSynchronizer::wait() : after pthread_mutex_unlock()" << ::std::endl;
 
     return result;
 }
@@ -112,18 +99,20 @@ void CSynchronizer::notifyAll()
 {
 	::std::cout << "CSynchronizer::notifyAll() : before pthread_mutex_lock()" << ::std::endl;
 
-    if (pthread_mutex_lock(&fLockForNotify) != 0) {
+    if (pthread_mutex_lock(&fMutex) != 0) {
         assert(false);
         return;
     }
 
 	::std::cout << "CSynchronizer::notifyAll() : before pthread_cond_broadcast()" << ::std::endl;
-    if ((pthread_cond_broadcast(&fWait)) != 0) {
+
+    if ((pthread_cond_broadcast(&fCond)) != 0) {
         assert(false);
     }
+    
 	::std::cout << "CSynchronizer::notifyAll() : after pthread_cond_broadcast()" << ::std::endl;
 
-    if (pthread_mutex_unlock(&fLockForNotify) != 0) {
+    if (pthread_mutex_unlock(&fMutex) != 0) {
         assert(false);
         return;
     }
