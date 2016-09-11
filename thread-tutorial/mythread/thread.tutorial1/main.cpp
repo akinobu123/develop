@@ -1,6 +1,7 @@
 #include <iostream>
-#include "CRunnable.h"
 #include <unistd.h>
+#include "CRunnable.h"
+#include "CSynchronizer.h"
 
 static const char *const kThreadAName("threadA");
 static const char *const kThreadBName("threadB");
