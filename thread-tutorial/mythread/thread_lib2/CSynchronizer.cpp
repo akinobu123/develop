@@ -110,6 +110,8 @@ bool CSynchronizer::wait(int msec)
 
 void CSynchronizer::notifyAll()
 {
+	::std::cout << "CSynchronizer::notifyAll() : before pthread_mutex_lock()" << ::std::endl;
+
     if (pthread_mutex_lock(&fLockForNotify) != 0) {
         assert(false);
         return;
