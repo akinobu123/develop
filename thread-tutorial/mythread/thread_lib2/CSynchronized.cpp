@@ -45,7 +45,7 @@ void CSynchronized::lock()
 void CSynchronized::unlock()
 {
     if (fSync != 0) {
-        assert(fCounter > 0);
+//        assert(fCounter > 0);
 //        --fCounter;
         fSync->unlock();
 //    	::std::cout << "CSynchronized::unlock() : counter=" << fCounter << ::std::endl;
