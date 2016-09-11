@@ -7,18 +7,18 @@
 CMutexAuto::CMutexAuto(CMutex *mutex)
 : fMutex(mutex)
 {
-    if (fMutex != 0) {
-        fMutex->lock();
-    } else {
-        assert(false);
-    }
+	assert( fMutex != NULL );
+	
+    fMutex->lock();
+
 	::std::cout << "CMutexAuto::CMutexAuto() : locked" << ::std::endl;
 }
 
 CMutexAuto::~CMutexAuto()
 {
-    if (fMutex != 0) {
-        fMutex->unlock();
-    }
+	assert( fMutex != NULL );
+	
+    fMutex->unlock();
+
 	::std::cout << "CMutexAuto::~CMutexAuto() : unlocked" << ::std::endl;
 }

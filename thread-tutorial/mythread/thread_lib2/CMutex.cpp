@@ -20,12 +20,6 @@ CMutex::~CMutex()
 	::std::cout << "CMutex::~CMutex() : after destroy" << ::std::endl;
 }
 
-// public member functions
-CMutex* CMutex::createInstance()
-{
-    return new CMutex();
-}
-
 // Gets a lock
 void CMutex::lock()
 {

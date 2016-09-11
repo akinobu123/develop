@@ -5,12 +5,9 @@
 
 class CMutex
 {
-private:
-    CMutex();
-
 public:
+    CMutex();
     virtual ~CMutex();
-    static CMutex *createInstance();
     void lock();
     void unlock();
 
