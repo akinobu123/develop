@@ -46,7 +46,7 @@ void CJob::onScanCompleted()
 {
     // implement here.
     ::std::cout << "CJob::onScanCompleted() : before mutexAuto" << ::std::endl;
-    CMutexAuto mutexAuto(fMutex);
+//    CMutexAuto mutexAuto(fMutex);
     ::std::cout << "CJob::onScanCompleted() : after mutexAuto" << ::std::endl;
     fIsScanCompleted = true;
     ::std::cout << "CJob::onScanCompleted() : complete flag setted" << ::std::endl;
