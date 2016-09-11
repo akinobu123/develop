@@ -24,12 +24,12 @@ public:
 
     virtual ~CDummyIIT();
 
-    // IRunnable's method
-    virtual void run();
-
     // CDummyIIT's method
     // async process.
     void startScan();
+
+    // IRunnable's method
+    virtual void run();
 
 private:
     CThread *fThread;

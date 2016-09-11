@@ -6,10 +6,9 @@
 #include "CDummyIIT.h"
 
 // constructors & destructor
-CDummyIIT::CDummyIIT(
-    ICallbackReceiver *callbackReceiver)
-: fThread(0)
-, fCallbackReceiver(callbackReceiver)
+CDummyIIT::CDummyIIT( ICallbackReceiver *callbackReceiver )
+ : fThread(0)
+ , fCallbackReceiver(callbackReceiver)
 {
     // Nothing to do.
 }
@@ -20,6 +19,16 @@ CDummyIIT::~CDummyIIT()
         fThread->join();
         delete fThread;
     }
+}
+
+// CDummyIIT's method
+// async process.
+void CDummyIIT::startScan()
+{
+    ::std::cout << "CDummyIIT:scan requested" << ::std::endl;
+    assert((fThread == 0) && "One shot");
+    fThread = CThread::createInstance(this, "");
+    fThread->start();
 }
 
 // public member functions
@@ -36,15 +45,5 @@ void CDummyIIT::run()
     ::std::cout << "CDummyIIT:scan completed" << ::std::endl;
     
     fCallbackReceiver->onScanCompleted();
-}
-
-// CDummyIIT's method
-// async process.
-void CDummyIIT::startScan()
-{
-    ::std::cout << "CDummyIIT:scan requested" << ::std::endl;
-    assert((fThread == 0) && "One shot");
-    fThread = CThread::createInstance(this, "");
-    fThread->start();
 }
 

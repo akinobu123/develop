@@ -8,8 +8,7 @@
 #include "CSynchronizer.h"
 
 
-class CJob:
-    public CDummyIIT::ICallbackReceiver
+class CJob : public CDummyIIT::ICallbackReceiver
 {
 public:
     CJob();
@@ -24,7 +23,6 @@ public:
 
 private:
     bool fIsScanCompleted;
-    CMutex *fMutex;
     CSynchronizer *fSync;
     CDummyIIT *fDummyIIT;
 
