@@ -1,6 +1,4 @@
 #include <iostream>
-#include "CSynchronizer.h"
-#include "CSynchronized.h"
 #include "CRunnable.h"
 #include <unistd.h>
 
