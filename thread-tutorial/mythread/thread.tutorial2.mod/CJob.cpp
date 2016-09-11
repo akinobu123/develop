@@ -56,7 +56,12 @@ void CJob::waitForScanCompleted()
     // implement here.
     CSynchronized sync(fSync);
     while (! fIsScanCompleted) {
+
+            ::std::cout << "CJob:wait before wait" << ::std::endl;
+
 	    sync.wait();
+
+            ::std::cout << "CJob:wait after wait" << ::std::endl;
     }
 
     ::std::cout << "CJob:wait end" << ::std::endl;
