@@ -13,7 +13,8 @@ CSynchronized::CSynchronized(CSynchronizer *sync)
     if (fSync != 0) {
         fSync->lock();
 //        ++fCounter;
-    	::std::cout << "CSynchronized::construct() : lock : counter=" << fCounter << ::std::endl;
+//    	::std::cout << "CSynchronized::construct() : lock : counter=" << fCounter << ::std::endl;
+    	::std::cout << "CSynchronized::construct() : lock" << ::std::endl;
     } else {
         assert(false);
     }
@@ -23,7 +24,8 @@ CSynchronized::~CSynchronized()
 {
     if (fSync != 0) {
 //        for(int i = 0; i < fCounter; ++i) {
-        	::std::cout << "CSynchronized::destruct() : unlock " << i << ::std::endl;
+//        	::std::cout << "CSynchronized::destruct() : unlock " << i << ::std::endl;
+        	::std::cout << "CSynchronized::destruct() : unlock " << ::std::endl;
             fSync->unlock();
 //    }
     }
@@ -35,7 +37,8 @@ void CSynchronized::lock()
     if (fSync != 0) {
         fSync->lock();
 //        ++fCounter;
-    	::std::cout << "CSynchronized::lock() : counter=" << fCounter << ::std::endl;
+//    	::std::cout << "CSynchronized::lock() : counter=" << fCounter << ::std::endl;
+    	::std::cout << "CSynchronized::lock() " << ::std::endl;
     }
 }
 
@@ -45,7 +48,8 @@ void CSynchronized::unlock()
         assert(fCounter > 0);
 //        --fCounter;
         fSync->unlock();
-    	::std::cout << "CSynchronized::unlock() : counter=" << fCounter << ::std::endl;
+//    	::std::cout << "CSynchronized::unlock() : counter=" << fCounter << ::std::endl;
+    	::std::cout << "CSynchronized::unlock()" << ::std::endl;
     }
 }
 
