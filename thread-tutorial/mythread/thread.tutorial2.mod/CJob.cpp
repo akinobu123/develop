@@ -13,7 +13,7 @@ CJob::CJob()
 {
     fMutex = CMutex::createInstance();
     fSync = CSynchronizer::createInstance();
-    fDummyIIT = new CDummyIIT(this, fSync);
+    fDummyIIT = new CDummyIIT(this);
 }
 
 CJob::~CJob()
@@ -50,7 +50,7 @@ void CJob::onScanCompleted()
     ::std::cout << "CJob::onScanCompleted() : after mutexAuto" << ::std::endl;
     fIsScanCompleted = true;
     ::std::cout << "CJob::onScanCompleted() : complete flag setted" << ::std::endl;
-    fSync.notifyAll();
+    fSync->notifyAll();
     ::std::cout << "CJob::onScanCompleted() : after notifyAll" << ::std::endl;
 }
 
@@ -66,7 +66,7 @@ void CJob::waitForScanCompleted()
 
         ::std::cout << "CJob::waitForScanCompleted() : on-loop (before wait)" << ::std::endl;
 
-	    fSync.wait();
+	    fSync->wait();
 
         ::std::cout << "CJob::waitForScanCompleted() : on-loop (after wait)" << ::std::endl;
     }
