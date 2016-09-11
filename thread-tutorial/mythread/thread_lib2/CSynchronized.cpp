@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include "CSynchronized.h"
+#include <iostream>
 
 
 // constructors & destructor

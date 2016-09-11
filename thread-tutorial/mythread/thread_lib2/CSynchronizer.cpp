@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <assert.h>
+#include <iostream>
 
 #include "CSynchronizer.h"
 
