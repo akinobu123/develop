@@ -60,6 +60,7 @@ void CSynchronized::wait()
     }
 }
 
+/*
 bool CSynchronized::wait(int msec)
 {
     if (fSync != 0) {
@@ -67,6 +68,7 @@ bool CSynchronized::wait(int msec)
     }
     return false;
 }
+*/
 
 void CSynchronized::notifyAll()
 {

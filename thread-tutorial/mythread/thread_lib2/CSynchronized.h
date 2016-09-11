@@ -16,7 +16,7 @@ public:
     void lock();
     void unlock();
     void wait();
-    bool wait(int msec);
+//    bool wait(int msec);
     void notifyAll();
 
 private:
