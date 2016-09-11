@@ -64,7 +64,9 @@ bool CSynchronizer::wait(int msec)
 
     bool result = true;
     if (msec <= 0) {
+        	::std::cout << "CSynchronizer::wait() : before pthread_cond_wait()" << ::std::endl;
         if (pthread_cond_wait(&fWait, &fLockForWait) != 0) {
+        	::std::cout << "CSynchronizer::wait() : after pthread_cond_wait()" << ::std::endl;
             assert(false);
             return false;
         }
