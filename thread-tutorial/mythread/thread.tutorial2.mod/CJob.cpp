@@ -26,9 +26,9 @@ CJob::~CJob()
 void CJob::onScanCompleted()
 {
     // implement here.
-//    CSynchronized sync(fSync);
+    CSynchronized sync(fSync);
     fIsScanCompleted = true;
-//    sync.notifyAll();
+    sync.notifyAll();
 }
 
 // CJob's method

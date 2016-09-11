@@ -37,9 +37,9 @@ void CDummyIIT::run()
 
     ::std::cout << "CDummyIIT:scan completed" << ::std::endl;
     
-    CSynchronized sync(fSync);
+//    CSynchronized sync(fSync);
     fCallbackReceiver->onScanCompleted();
-    sync.notifyAll();
+//    sync.notifyAll();
 }
 
 // CDummyIIT's method
