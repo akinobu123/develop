@@ -1,8 +1,8 @@
 // File: CSynchronized.h - last edit:
 
 
-#ifndef _CLIB_C_SYNCHRONIZED_H
-#define _CLIB_C_SYNCHRONIZED_H
+#ifndef _C_SYNCHRONIZED_H
+#define _C_SYNCHRONIZED_H
 
 #include <stddef.h>
 #include "CSynchronizer.h"

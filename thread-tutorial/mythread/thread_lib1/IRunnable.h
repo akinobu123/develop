@@ -1,8 +1,8 @@
 // File: IRunnable.h	- last edit:
 
 
-#ifndef _CLIB_I_RUNNABLE_H
-#define _CLIB_I_RUNNABLE_H
+#ifndef _I_RUNNABLE_H
+#define _I_RUNNABLE_H
 
 class IRunnable
 {
