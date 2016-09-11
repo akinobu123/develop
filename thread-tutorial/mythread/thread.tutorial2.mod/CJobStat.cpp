@@ -31,7 +31,7 @@ bool CJobStat::isScanCompleted()
 
 void CJobStat::wait()
 {
-    fSync->wait()
+    fSync->wait();
 }
 
 void CJobStat::notifyAll()

@@ -6,7 +6,7 @@
 #include "CSynchronizer.h"
 
 
-class CJobStat:
+class CJobStat
 {
 public:
     CJobStat();

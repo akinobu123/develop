@@ -10,7 +10,6 @@ CJob::CJob()
 : fIsScanCompleted(false)
 , fSync(0)
 , fDummyIIT(0)
-	,
 {
     fSync = CSynchronizer::createInstance();
     fDummyIIT = new CDummyIIT(this, fSync);
