@@ -11,7 +11,7 @@ CJob::CJob()
 , fSync(0)
 , fDummyIIT(0)
 {
-    fMutex = CMutex::createInstance();
+    fMutex = new CMutex();
     fSync = CSynchronizer::createInstance();
     fDummyIIT = new CDummyIIT(this);
 }
