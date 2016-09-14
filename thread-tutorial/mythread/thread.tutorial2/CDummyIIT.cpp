@@ -1,6 +1,5 @@
 // File: CDummyIIT.cpp
 
-
 #include <iostream>
 #include <unistd.h>
 #include <assert.h>
