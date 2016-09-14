@@ -26,7 +26,7 @@ CDummyIIT::~CDummyIIT()
 void CDummyIIT::startScan()
 {
     ::std::cout << "CDummyIIT:scan requested" << ::std::endl;
-    assert((fThread == 0) && "One shot");
+    assert(fThread == 0);
     fThread = CThread::createInstance(this, "");
     fThread->start();
 }
