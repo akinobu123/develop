@@ -1,10 +1,10 @@
-#include "CJob.h"
+#include "CMain.h"
 
 int main()
 {
-    CJob *job = new CJob();
-    job->execute();
+    CMain *mainJob = new CMain();
+    mainJob->execute();
 
-    delete job;
+    delete mainJob;
     return 0;
 }
