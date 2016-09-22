@@ -23,10 +23,9 @@ CSub::~CSub()
 
 // CSub's method
 // async process.
-void CSub::startScan()
+void CSub::startProc()
 {
-    ::std::cout << "CSub:scan requested" << ::std::endl;
-    assert((fThread == 0) && "One shot");
+    ::std::cout << "CSub:proc requested" << ::std::endl;
     fThread = CThread::createInstance(this, "");
     fThread->start();
 }
