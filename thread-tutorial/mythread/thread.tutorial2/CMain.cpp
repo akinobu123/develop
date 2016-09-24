@@ -27,12 +27,14 @@ void CMain::execute()
     fSub->startProc();
     
     ::std::cout << "CMain::execute() : after startProc()" << ::std::endl;
+    
+    // ... do some Main-process on parallel with sub-process.
 
     waitForProcCompleted();
     
     ::std::cout << "CMain::execute() : after waitForProcCompleted()" << ::std::endl;
     
-    // ... do Main process etc.
+    // ... do Main-process remaining after waiting for sub-process.
 
 }
 
