@@ -3,14 +3,14 @@
 
 #include <pthread.h>
 
-class CSynchronizer
+class CCondVal
 {
 private:
-    CSynchronizer();
+    CCondVal();
 
 public:
-    virtual ~CSynchronizer();
-    static CSynchronizer *createInstance();
+    virtual ~CCondVal();
+    static CCondVal *createInstance();
     void wait();
     void notifyAll();
 
