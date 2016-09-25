@@ -11,22 +11,22 @@
 class CMain : public CSub::ICallbackReceiver
 {
 public:
-    CMain();
+	CMain();
 
-    virtual ~CMain();
+	virtual ~CMain();
 
-    // CMain's method
-    void execute();
+	// CMain's method
+	void execute();
 
-    // CSub::ICallbackReceiver's method
-    virtual void onProcCompleted();
+	// CSub::ICallbackReceiver's method
+	virtual void onProcCompleted();
 
 private:
-    bool fIsProcCompleted;
-    CCondVal *fCondVal;
-    CSub *fSub;
+	bool fIsProcCompleted;
+	CCondVal *fCondVal;
+	CSub *fSub;
 
-    void waitForProcCompleted();
+	void waitForProcCompleted();
 
 };
 
