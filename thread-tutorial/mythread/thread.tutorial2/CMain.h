@@ -5,7 +5,7 @@
 
 #include "CSub.h"
 #include "CMutex.h"
-#include "CSynchronizer.h"
+#include "CCondVal.h"
 
 
 class CMain : public CSub::ICallbackReceiver
@@ -23,7 +23,7 @@ public:
 
 private:
     bool fIsProcCompleted;
-    CSynchronizer *fSync;
+    CCondVal *fCondVal;
     CSub *fSub;
 
     void waitForProcCompleted();
