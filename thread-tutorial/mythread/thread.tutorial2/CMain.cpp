@@ -6,17 +6,17 @@
 // constructors & destructor
 CMain::CMain()
  : fIsProcCompleted(false)
- , fSync(0)
+ , fCondVal(0)
  , fSub(0)
 {
-    fSync = CSynchronizer::createInstance();
+    fCondVal = CCondVal::createInstance();
     fSub = new CSub(this);
 }
 
 CMain::~CMain()
 {
     delete fSub;
-    delete fSync;
+    delete fCondVal;
 }
 
 // CMain's method
@@ -44,7 +44,7 @@ void CMain::onProcCompleted()
 
     fIsProcCompleted = true;
     
-    fSync->notifyAll();
+    fCondVal->notifyAll();
     
     ::std::cout << "CMain::onProcCompleted() : end" << ::std::endl;
 }
@@ -55,7 +55,7 @@ void CMain::waitForProcCompleted()
     ::std::cout << "CMain::waitForProcCompleted() : start" << ::std::endl;
     
     while (! fIsProcCompleted) {
-	    fSync->wait();
+	    fCondVal->wait();
     }
 
     ::std::cout << "CMain::waitForProcCompleted() : end" << ::std::endl;
