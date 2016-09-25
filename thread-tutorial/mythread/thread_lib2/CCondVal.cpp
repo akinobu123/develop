@@ -4,10 +4,10 @@
 #include <assert.h>
 #include <iostream>
 
-#include "CSynchronizer.h"
+#include "CCondVal.h"
 
 // constructors & destructor
-CSynchronizer::CSynchronizer()
+CCondVal::CCondVal()
 {
     if (pthread_mutex_init(&fMutex, NULL) != 0) {
         assert(false);
@@ -18,7 +18,7 @@ CSynchronizer::CSynchronizer()
     }
 }
 
-CSynchronizer::~CSynchronizer()
+CCondVal::~CCondVal()
 {
     if (pthread_mutex_destroy(&fMutex) != 0) {
         assert(false);
@@ -30,24 +30,24 @@ CSynchronizer::~CSynchronizer()
 }
 
 // public member functions
-CSynchronizer* CSynchronizer::createInstance()
+CCondVal* CCondVal::createInstance()
 {
-    return new CSynchronizer();
+    return new CCondVal();
 }
 
 // Release a lock, then waits until either some other thread invokes the notify
 // method or the notifyAll method
-void CSynchronizer::wait()
+void CCondVal::wait()
 {
     if (pthread_mutex_lock(&fMutex) != 0) {
         assert(false);
     }
 
-	::std::cout << "CSynchronizer::wait() : before pthread_cond_wait()" << ::std::endl;
+	::std::cout << "CCondVal::wait() : before pthread_cond_wait()" << ::std::endl;
     if (pthread_cond_wait(&fCond, &fMutex) != 0) {
         assert(false);
     }
-	::std::cout << "CSynchronizer::wait() : after pthread_cond_wait()" << ::std::endl;
+	::std::cout << "CCondVal::wait() : after pthread_cond_wait()" << ::std::endl;
 
     if (pthread_mutex_unlock(&fMutex) != 0) {
         assert(false);
@@ -55,7 +55,7 @@ void CSynchronizer::wait()
 }
 
 
-void CSynchronizer::notifyAll()
+void CCondVal::notifyAll()
 {
     if (pthread_mutex_lock(&fMutex) != 0) {
         assert(false);
@@ -64,7 +64,7 @@ void CSynchronizer::notifyAll()
     if ((pthread_cond_broadcast(&fCond)) != 0) {
         assert(false);
     }
-	::std::cout << "CSynchronizer::notifyAll() : after pthread_cond_broadcast()" << ::std::endl;
+	::std::cout << "CCondVal::notifyAll() : after pthread_cond_broadcast()" << ::std::endl;
 
     if (pthread_mutex_unlock(&fMutex) != 0) {
         assert(false);
