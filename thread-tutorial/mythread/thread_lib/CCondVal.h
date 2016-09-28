@@ -1,5 +1,5 @@
-#ifndef _SYNCHRONIZER_H
-#define _SYNCHRONIZER_H
+#ifndef _CONDVAL_H
+#define _CONDVAL_H
 
 #include <pthread.h>
 
@@ -7,17 +7,21 @@ class CCondVal
 {
 private:
     CCondVal();
+    bool init();
 
 public:
     virtual ~CCondVal();
     static CCondVal *createInstance();
+    
+    void lockForSync();
+    void unlockForSync();
+    
     void wait();
     void notifyAll();
 
 private:
-    pthread_t fThreadID;
     pthread_mutex_t fMutex;
     pthread_cond_t fCond;
 };
 
-#endif /* _SYNCHRONIZER_H */
+#endif /* _CONDVAL_H */

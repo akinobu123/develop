@@ -8,66 +8,59 @@
 
 // constructors & destructor
 CCondVal::CCondVal()
+	: fMutex(PTHREAD_MUTEX_INITIALIZER)
+	, fCond(PTHREAD_COND_INITIALIZER)
 {
-    if (pthread_mutex_init(&fMutex, NULL) != 0) {
-        assert(false);
-    }
-
-    if (pthread_cond_init(&fCond, NULL) != 0) {
-        assert(false);
-    }
 }
 
-CCondVal::~CCondVal()
+bool CCondVal::init()
 {
-    if (pthread_mutex_destroy(&fMutex) != 0) {
-        assert(false);
-    }
-    
-    if (pthread_cond_destroy(&fCond) != 0) {
-        assert(false);
-    }
+    pthread_mutex_init(&fMutex, NULL);
+    pthread_cond_init(&fCond, NULL);
+    return true;
 }
 
 // public member functions
+CCondVal::~CCondVal()
+{
+    pthread_cond_destroy( &fCond );
+    pthread_mutex_destroy( &fMutex );
+}
+
 CCondVal* CCondVal::createInstance()
 {
-    return new CCondVal();
+    CCondVal* tmp = new CCondVal();
+    if( ! tmp->init() ) {
+        return NULL;
+    }
+    return tmp;
 }
+
+
+void CCondVal::lockForSync()
+{
+    int ret = 0;
+    ret = pthread_mutex_lock(&fMutex);
+    assert( ret == 0 );
+}
+
+void CCondVal::unlockForSync()
+{
+    int ret = 0;
+    ret = pthread_mutex_unlock(&fMutex);
+    assert( ret == 0 );
+}
+
 
 // Release a lock, then waits until either some other thread invokes the notify
 // method or the notifyAll method
 void CCondVal::wait()
 {
-    if (pthread_mutex_lock(&fMutex) != 0) {
-        assert(false);
-    }
-
-	::std::cout << "CCondVal::wait() : before pthread_cond_wait()" << ::std::endl;
-    if (pthread_cond_wait(&fCond, &fMutex) != 0) {
-        assert(false);
-    }
-	::std::cout << "CCondVal::wait() : after pthread_cond_wait()" << ::std::endl;
-
-    if (pthread_mutex_unlock(&fMutex) != 0) {
-        assert(false);
-    }
+    pthread_cond_wait(&fCond, &fMutex);
 }
-
 
 void CCondVal::notifyAll()
 {
-    if (pthread_mutex_lock(&fMutex) != 0) {
-        assert(false);
-    }
-
-    if ((pthread_cond_broadcast(&fCond)) != 0) {
-        assert(false);
-    }
-	::std::cout << "CCondVal::notifyAll() : after pthread_cond_broadcast()" << ::std::endl;
-
-    if (pthread_mutex_unlock(&fMutex) != 0) {
-        assert(false);
-    }
+    pthread_cond_broadcast(&fCond);
 }
 
