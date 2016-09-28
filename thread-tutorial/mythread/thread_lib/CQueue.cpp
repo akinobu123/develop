@@ -26,7 +26,7 @@ void CQueue::send( IMsg& msg )
 
     // processing
     IMsg* myMsg = msg.duplicate();
-    fData.push_back( myMsg );
+    fData.push( myMsg );
 
     // notify
     fCondVal.notifyAll();
@@ -43,7 +43,7 @@ void CQueue::receive( IMsg* msg )
 
     // processing
     IMsg* myMsg = fData.front();
-    fData.pop_front();
+    fData.pop();
     msg->copy( myMsg );
     delete myMsg;
 

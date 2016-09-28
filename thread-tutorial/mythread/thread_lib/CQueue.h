@@ -16,7 +16,7 @@ public:
 
 private:
     ::std::queue<IMsg*> fData;
-    CCondVal fCondVal*;
+    CCondVal* fCondVal;
 };
 
 #endif /* _C_QUEUE_H */
