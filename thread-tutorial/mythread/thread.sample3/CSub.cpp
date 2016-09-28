@@ -1,5 +1,6 @@
 #include <iostream>
 #include "CSub.h"
+#include "CMsg.h"
 
 // constructors & destructor
 CSub::CSub( ICallbackReceiver *callbackReceiver, CQueue* queue )

@@ -19,7 +19,7 @@ public:
 
     virtual void copy( IMsg* msg )
     {
-        fData = msg->fData;
+        fData = ((CMsg*)msg)->fData;
     }
     
     // original methods

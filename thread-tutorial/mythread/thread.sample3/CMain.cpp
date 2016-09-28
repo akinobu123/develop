@@ -34,7 +34,7 @@ void CMain::execute()
         sleep(3);
 
         // make text
-        std::ostrstream strstm ;
+        ::std::ostringstream strstm ;
         strstm << _T("[A] send interval 3 sec -> print interval 1 sec : ") << i;
         std::string str = strstm;
 
@@ -47,7 +47,7 @@ void CMain::execute()
         sleep(1);
 
         // make text
-        std::ostrstream strstm ;
+        ::std::ostringstream strstm ;
         strstm << _T("[B] send interval 1 sec -> print interval 3 sec : ") << i;
         std::string str = strstm;
 
