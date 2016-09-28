@@ -1,8 +1,6 @@
 #include <stddef.h>
 #include <errno.h>
-#include <sys/time.h>
 #include <assert.h>
-#include <iostream>
 
 #include "CCondVal.h"
 
