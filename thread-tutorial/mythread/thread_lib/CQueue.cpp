@@ -15,30 +15,30 @@ CQueue::~CQueue()
     while( ! fData.empty() ) {
         IMsg* tmp = fData.front();
         delete tmp;
-        fData.pop_front();
+        fData.pop();
     }
     delete fCondVal;
 }
 
 void CQueue::send( IMsg& msg )
 {
-    fCondVal.lockForSync();
+    fCondVal->lockForSync();
 
     // processing
     IMsg* myMsg = msg.duplicate();
     fData.push( myMsg );
 
     // notify
-    fCondVal.notifyAll();
-    fCondVal.unlockForSync();
+    fCondVal->notifyAll();
+    fCondVal->unlockForSync();
 }
 
 void CQueue::receive( IMsg* msg )
 {
-    fCondVal.lockForSync();
+    fCondVal->lockForSync();
     // wait until queue is not empty.
     while (fData.empty()) {
-        fCondVal.wait();
+        fCondVal->wait();
     }
 
     // processing
@@ -47,5 +47,5 @@ void CQueue::receive( IMsg* msg )
     msg->copy( myMsg );
     delete myMsg;
 
-    fCondVal.unlockForSync();
+    fCondVal->unlockForSync();
 }
