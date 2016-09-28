@@ -35,11 +35,10 @@ void CMain::execute()
 
         // make text
         ::std::ostringstream strstm ;
-        strstm << _T("[A] send interval 3 sec -> print interval 1 sec : ") << i;
-        std::string str = strstm;
+        strstm << "[A] send interval 3 sec -> print interval 1 sec : " << i;
 
         // push message to queue
-        CMsg msg( str );
+        CMsg msg( strstm.str() );
         fQueue.send( msg );
     }
 
@@ -48,11 +47,10 @@ void CMain::execute()
 
         // make text
         ::std::ostringstream strstm ;
-        strstm << _T("[B] send interval 1 sec -> print interval 3 sec : ") << i;
-        std::string str = strstm;
+        strstm << "[B] send interval 1 sec -> print interval 3 sec : " << i;
 
         // push message to queue
-        CMsg msg( str );
+        CMsg msg( strstm.str() );
         fQueue.send( msg );
     }
 
