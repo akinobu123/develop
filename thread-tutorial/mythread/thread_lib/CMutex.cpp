@@ -1,39 +1,33 @@
 #include <stddef.h>
 #include <errno.h>
 #include <assert.h>
-#include <iostream>
 
 #include "CMutex.h"
 
 // constructors & destructor
 CMutex::CMutex()
+    : fMutex(PTHREAD_MUTEX_INITIALIZER)
 {
-    if (pthread_mutex_init(&fMutex, NULL) != 0) {
-        assert(false);
-    }
+    pthread_mutex_init(&fMutex, NULL);
 }
 
 CMutex::~CMutex()
 {
-    if (pthread_mutex_destroy(&fMutex) != 0) {
-        assert(false);
-    }
+    pthread_mutex_destroy(&fMutex);
 }
 
 // Gets a lock
 void CMutex::lock()
 {
-    if (pthread_mutex_lock(&fMutex) != 0) {
-        assert(false);
-        return;
-    }
+    int ret = 0;
+    ret = pthread_mutex_lock(&fMutex);
+    assert( ret == 0 );
 }
 
 // Releases a lock
 void CMutex::unlock()
 {
-    if (pthread_mutex_unlock(&fMutex) != 0) {
-        assert(false);
-        return;
-    }
+    int ret = 0;
+    ret = pthread_mutex_unlock(&fMutex);
+    assert( ret == 0 );
 }

@@ -8,47 +8,32 @@
 
 // constructors & destructor
 CCondVal::CCondVal()
-	: fMutex(PTHREAD_MUTEX_INITIALIZER)
-	, fCond(PTHREAD_COND_INITIALIZER)
+    : fMutex(0)
+    , fCond(PTHREAD_COND_INITIALIZER)
 {
-}
-
-bool CCondVal::init()
-{
-    pthread_mutex_init(&fMutex, NULL);
     pthread_cond_init(&fCond, NULL);
-    return true;
 }
 
 // public member functions
 CCondVal::~CCondVal()
 {
     pthread_cond_destroy( &fCond );
-    pthread_mutex_destroy( &fMutex );
 }
 
 CCondVal* CCondVal::createInstance()
 {
-    CCondVal* tmp = new CCondVal();
-    if( ! tmp->init() ) {
-        return NULL;
-    }
-    return tmp;
+    return new CCondVal();
 }
 
 
 void CCondVal::lockForSync()
 {
-    int ret = 0;
-    ret = pthread_mutex_lock(&fMutex);
-    assert( ret == 0 );
+    fMutex.lock();
 }
 
 void CCondVal::unlockForSync()
 {
-    int ret = 0;
-    ret = pthread_mutex_unlock(&fMutex);
-    assert( ret == 0 );
+    fMutex.unlock();
 }
 
 
@@ -56,7 +41,7 @@ void CCondVal::unlockForSync()
 // method or the notifyAll method
 void CCondVal::wait()
 {
-    pthread_cond_wait(&fCond, &fMutex);
+    pthread_cond_wait(&fCond, fMutex.get_data());
 }
 
 void CCondVal::notifyAll()

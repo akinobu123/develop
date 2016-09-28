@@ -10,7 +10,6 @@ private:
     
 public:
     virtual ~CThread();
-
     static CThread *createInstance(IRunnable *runnable, const char *name);
     
     void start();

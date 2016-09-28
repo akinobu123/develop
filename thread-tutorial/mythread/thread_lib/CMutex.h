@@ -10,6 +10,8 @@ public:
     virtual ~CMutex();
     void lock();
     void unlock();
+    
+    pthread_mutex_t * get_data() { return &fMutex; }
 
 private:
     pthread_mutex_t fMutex;

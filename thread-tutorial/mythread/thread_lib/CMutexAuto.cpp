@@ -1,24 +1,20 @@
 #include <assert.h>
-#include "CMutexAuto.h"
 #include <iostream>
+#include "CMutexAuto.h"
 
 
 // constructors & destructor
 CMutexAuto::CMutexAuto(CMutex *mutex)
 : fMutex(mutex)
 {
-	assert( fMutex != NULL );
-	
-    fMutex->lock();
+    assert( fMutex != NULL );
 
-	::std::cout << "CMutexAuto::CMutexAuto() : locked" << ::std::endl;
+    fMutex->lock();
 }
 
 CMutexAuto::~CMutexAuto()
 {
-	assert( fMutex != NULL );
-	
-    fMutex->unlock();
+    assert( fMutex != NULL );
 
-	::std::cout << "CMutexAuto::~CMutexAuto() : unlocked" << ::std::endl;
+    fMutex->unlock();
 }

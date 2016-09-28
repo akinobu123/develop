@@ -1,6 +1,3 @@
-// File: IRunnable.h	- last edit:
-
-
 #ifndef _I_RUNNABLE_H
 #define _I_RUNNABLE_H
 

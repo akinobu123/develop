@@ -2,12 +2,12 @@
 #define _CONDVAL_H
 
 #include <pthread.h>
+#include "CMutex.h"
 
 class CCondVal
 {
 private:
     CCondVal();
-    bool init();
 
 public:
     virtual ~CCondVal();
@@ -20,7 +20,7 @@ public:
     void notifyAll();
 
 private:
-    pthread_mutex_t fMutex;
+    CMutex fMutex;
     pthread_cond_t fCond;
 };
 
