@@ -3,6 +3,7 @@
 
 #include "IRunnable.h"
 #include "CThread.h"
+#include "CQueue.h"
 #include <unistd.h>
 
 class CSub : public IRunnable

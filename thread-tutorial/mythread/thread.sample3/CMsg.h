@@ -1,6 +1,7 @@
 #ifndef _C_MSG_H_
 #define _C_MSG_H_
 
+#include <string>
 #include "IMsg.h"
 
 class CMsg : public IMsg

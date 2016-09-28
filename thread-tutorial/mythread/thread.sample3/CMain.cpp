@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include "CMain.h"
+#include "CQueue.h"
 #include "CMsg.h"
 
 // constructors & destructor
