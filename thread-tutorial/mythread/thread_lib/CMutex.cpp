@@ -6,8 +6,8 @@
 
 // constructors & destructor
 CMutex::CMutex()
-    : fMutex(PTHREAD_MUTEX_INITIALIZER)
 {
+    fMutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_init(&fMutex, NULL);
 }
 
