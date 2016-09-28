@@ -5,16 +5,19 @@
 // constructors & destructor
 CQueue::CQueue()
     : fData()
-    , fCondVal()
+    , fCondVal(NULL)
 {
+    fCondVal = CCondVal::createInstance();
 }
 
 CQueue::~CQueue()
 {
-    for( auto itr = fData.begin(); itr != fData.end(); ++itr) {
-        delete &(*itr);
+    while( ! fData.empty() ) {
+        IMsg* tmp = fData.front();
+        delete tmp;
+        fData.pop_front();
     }
-    fData.clear();
+    delete fCondVal;
 }
 
 void CQueue::send( IMsg& msg )

@@ -11,12 +11,12 @@ public:
     CQueue();
     virtual ~CQueue();
     
-    void send();
-    void receive();
+    void send( IMsg& msg );
+    void receive( IMsg* msg );
 
 private:
     ::std::queue<IMsg*> fData;
-    CCondVal fCondVal;
+    CCondVal fCondVal*;
 };
 
 #endif /* _C_QUEUE_H */
