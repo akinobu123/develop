@@ -6,7 +6,7 @@
 
 // constructors & destructor
 CCondVal::CCondVal()
-    : fMutex(0)
+    : fMutex()
     , fCond(PTHREAD_COND_INITIALIZER)
 {
     pthread_cond_init(&fCond, NULL);
