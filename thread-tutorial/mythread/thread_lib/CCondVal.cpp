@@ -8,7 +8,7 @@
 CCondVal::CCondVal()
     : fMutex()
 {
-    fMutex = PTHREAD_COND_INITIALIZER;;
+    fCond = PTHREAD_COND_INITIALIZER;;
     pthread_cond_init(&fCond, NULL);
 }
 
