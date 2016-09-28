@@ -30,29 +30,31 @@ void CMain::execute()
 
     fSub->startProc();
 
-    for (int i = 0; i < 10; i++) {
-        sleep(3);
+    for (int i = 0; i < 5; i++) {
+        sleep(2);
 
         // make text
         ::std::ostringstream strstm ;
-        strstm << "[A] send interval 3 sec -> print interval 1 sec : " << i;
+        strstm << "[A] send interval 2 sec -> print interval 1 sec : " << i;
 
         // push message to queue
         CMsg msg( strstm.str() );
         fQueue.send( msg );
     }
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         sleep(1);
 
         // make text
         ::std::ostringstream strstm ;
-        strstm << "[B] send interval 1 sec -> print interval 3 sec : " << i;
+        strstm << "[B] send interval 1 sec -> print interval 2 sec : " << i;
 
         // push message to queue
         CMsg msg( strstm.str() );
         fQueue.send( msg );
     }
+    
+    ::std::cout << "CMain : all sended. waiting for CSub." << ::std::endl;
 
     waitForProcCompleted();
 }

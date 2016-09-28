@@ -32,7 +32,7 @@ void CSub::run()
 {
     // sub process
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 5; i++) {
         sleep(1);
         
         CMsg msg;
@@ -40,8 +40,8 @@ void CSub::run()
         ::std::cout << msg.getStr() << ::std::endl;
     }
 
-    for (int i = 0; i < 10; i++) {
-        sleep(3);
+    for (int i = 0; i < 5; i++) {
+        sleep(2);
         
         CMsg msg;
         fQueue->receive( &msg );
