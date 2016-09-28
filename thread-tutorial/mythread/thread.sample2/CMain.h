@@ -1,5 +1,3 @@
-// File: CMain.h 
-
 #ifndef _C_MAIN_H
 #define _C_MAIN_H
 
@@ -12,7 +10,6 @@ class CMain : public CSub::ICallbackReceiver
 {
 public:
 	CMain();
-
 	virtual ~CMain();
 
 	// CMain's method
@@ -20,14 +17,14 @@ public:
 
 	// CSub::ICallbackReceiver's method
 	virtual void onProcCompleted();
+    
+private:
+	void waitForProcCompleted();
 
 private:
 	bool fIsProcCompleted;
 	CCondVal *fCondVal;
 	CSub *fSub;
-
-	void waitForProcCompleted();
-
 };
 
 #endif /* !_C_MAIN_H */

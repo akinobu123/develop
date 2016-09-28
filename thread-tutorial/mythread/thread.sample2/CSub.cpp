@@ -1,5 +1,3 @@
-// File: CSub.cpp
-
 #include <iostream>
 #include <unistd.h>
 #include <assert.h>
@@ -7,10 +5,9 @@
 
 // constructors & destructor
 CSub::CSub( ICallbackReceiver *callbackReceiver )
- : fThread(0)
- , fCallbackReceiver(callbackReceiver)
+    : fThread(0)
+    , fCallbackReceiver(callbackReceiver)
 {
-    // Nothing to do.
 }
 
 CSub::~CSub()

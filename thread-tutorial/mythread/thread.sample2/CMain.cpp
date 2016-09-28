@@ -5,9 +5,9 @@
 
 // constructors & destructor
 CMain::CMain()
- : fIsProcCompleted(false)
- , fCondVal(0)
- , fSub(0)
+    : fIsProcCompleted(false)
+    , fCondVal(0)
+    , fSub(0)
 {
 	fCondVal = CCondVal::createInstance();
 	fSub = new CSub(this);
@@ -18,6 +18,7 @@ CMain::~CMain()
 	delete fSub;
 	delete fCondVal;
 }
+
 
 // CMain's method
 void CMain::execute()

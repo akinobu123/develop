@@ -1,5 +1,3 @@
-// File: CSub.h 
-
 #ifndef _C_SUB_H_
 #define _C_SUB_H_
 
@@ -7,10 +5,10 @@
 #include "CThread.h"
 #include <unistd.h>
 
-class CSub:
-    public IRunnable
+class CSub : public IRunnable
 {
 public:
+    // --- inner class ---
     class ICallbackReceiver
     {
     public:
@@ -19,13 +17,13 @@ public:
         // ICallbackReceiver's method
         virtual void onProcCompleted() = 0;
     };
+    // --- inner class ---
 
     CSub(ICallbackReceiver *callbackReceiver);
 
     virtual ~CSub();
 
     // CSub's method
-    // async process.
     void startProc();
 
     // IRunnable's method
