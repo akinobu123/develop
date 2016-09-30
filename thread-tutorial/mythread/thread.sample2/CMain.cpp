@@ -9,33 +9,34 @@ CMain::CMain()
     , fCondVal(0)
     , fSub(0)
 {
-	fCondVal = CCondVal::createInstance();
-	fSub = new CSub(this);
+    fCondVal = CCondVal::createInstance();
+    fSub = new CSub(this);
 }
 
 CMain::~CMain()
 {
-	delete fSub;
-	delete fCondVal;
+    fSub->join();
+    delete fSub;
+    delete fCondVal;
 }
 
 
 // CMain's method
 void CMain::execute()
 {
-	::std::cout << "CMain::execute() : before startProc()" << ::std::endl;
+    ::std::cout << "CMain::execute() : before startProc()" << ::std::endl;
 
-	fSub->startProc();
+    fSub->start();
 
-	::std::cout << "CMain::execute() : after startProc()" << ::std::endl;
+    ::std::cout << "CMain::execute() : after startProc()" << ::std::endl;
 
-	// ... do some Main-process on parallel with sub-process.
+    // ... do some Main-process on parallel with sub-process.
 
-	waitForProcCompleted();
+    waitForProcCompleted();
 
-	::std::cout << "CMain::execute() : after waitForProcCompleted()" << ::std::endl;
+    ::std::cout << "CMain::execute() : after waitForProcCompleted()" << ::std::endl;
 
-	// ... do Main-process remaining after waiting for sub-process.
+    // ... do Main-process remaining after waiting for sub-process.
 
 }
 
@@ -43,15 +44,15 @@ void CMain::execute()
 // CSub::ICallbackReceiver's method
 void CMain::onProcCompleted()
 {
-	fCondVal->lockForSync();
-	::std::cout << "CMain::onProcCompleted() : start" << ::std::endl;
+    fCondVal->lockForSync();
+    ::std::cout << "CMain::onProcCompleted() : start" << ::std::endl;
 
-	fIsProcCompleted = true;
+    fIsProcCompleted = true;
 
-	fCondVal->notifyAll();
+    fCondVal->notifyAll();
 
-	::std::cout << "CMain::onProcCompleted() : end" << ::std::endl;
-	fCondVal->unlockForSync();
+    ::std::cout << "CMain::onProcCompleted() : end" << ::std::endl;
+    fCondVal->unlockForSync();
 }
 
 // private member functions

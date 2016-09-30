@@ -5,26 +5,12 @@
 
 // constructors & destructor
 CSub::CSub( ICallbackReceiver *callbackReceiver )
-    : fThread(0)
-    , fCallbackReceiver(callbackReceiver)
+    : fCallbackReceiver(callbackReceiver)
 {
 }
 
 CSub::~CSub()
 {
-    if (fThread != 0) {
-        fThread->join();
-        delete fThread;
-    }
-}
-
-// CSub's method
-// async process.
-void CSub::startProc()
-{
-    ::std::cout << "CSub:proc requested" << ::std::endl;
-    fThread = CThread::createInstance(this, "");
-    fThread->start();
 }
 
 // public member functions

@@ -1,11 +1,10 @@
 #ifndef _C_SUB_H_
 #define _C_SUB_H_
 
-#include "IRunnable.h"
 #include "CThread.h"
 #include <unistd.h>
 
-class CSub : public IRunnable
+class CSub : public CThread
 {
 public:
     // --- inner class ---
@@ -23,14 +22,10 @@ public:
 
     virtual ~CSub();
 
-    // CSub's method
-    void startProc();
-
-    // IRunnable's method
+    // CThread's method
     virtual void run();
 
 private:
-    CThread *fThread;
     ICallbackReceiver *fCallbackReceiver;
 
 };
