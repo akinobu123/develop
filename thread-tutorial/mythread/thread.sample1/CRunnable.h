@@ -22,7 +22,7 @@ public:
         CMutex *mutex);
 
     // IRunnable's method
-    virtual void run();
+    virtual void* run();
 
 private:
     bool fIsTerminated;
