@@ -6,7 +6,7 @@
 
 // constructors & destructor
 CThread::CThread(const char *name)
-    : fThreadId;(0)
+    : fThreadId(0)
     , fName(name)
 {
 }
