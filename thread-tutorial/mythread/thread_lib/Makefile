@@ -8,6 +8,7 @@ TARGET    = libthread.so
 CXX       = g++
 CXXFLAGS  =  -O3 -Wall -fPIC
 LDFLAGS   = -shared
+INCLUDES  = -I.
 LIBS      = -pthread
 
 # rules
@@ -16,7 +17,7 @@ all:	$(OBJS)
 	@echo done.
 
 $(OBJS): $(SRCS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -c
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(SRCS) -c
 
 clean:
 	rm -rf *.o $(TARGET)
