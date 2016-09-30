@@ -8,19 +8,17 @@
 
 // constructors & destructor
 CMain::CMain()
-    : fIsProcCompleted(false)
-    , fQueue()
-    , fCondVal(0)
+    : fQueueToSub()
+    , fQueueToMain()
     , fSub(0)
 {
-    fCondVal = CCondVal::createInstance();
-    fSub = new CSub(this, &fQueue);
+    fSub = new CSub(&fQueueToSub, &fQueueToMain);
 }
 
 CMain::~CMain()
 {
+    fSub->join();
     delete fSub;
-    delete fCondVal;
 }
 
 
@@ -28,7 +26,7 @@ CMain::~CMain()
 void CMain::execute()
 {
 
-    fSub->startProc();
+    fSub->start();
 
     for (int i = 0; i < 5; i++) {
         sleep(2);
@@ -39,7 +37,7 @@ void CMain::execute()
 
         // push message to queue
         CMsg msg( strstm.str() );
-        fQueue.send( msg );
+        fQueueToSub.send( msg );
     }
 
     for (int i = 0; i < 5; i++) {
@@ -51,35 +49,16 @@ void CMain::execute()
 
         // push message to queue
         CMsg msg( strstm.str() );
-        fQueue.send( msg );
+        fQueueToSub.send( msg );
     }
     
     ::std::cout << "CMain : all sended. waiting for CSub." << ::std::endl;
 
-    waitForProcCompleted();
-}
-
-// public member functions
-// CSub::ICallbackReceiver's method
-void CMain::onProcCompleted()
-{
-    fCondVal->lockForSync();
-
-    fIsProcCompleted = true;
-
-    fCondVal->notifyAll();
-
-    fCondVal->unlockForSync();
-}
-
-// private member functions
-void CMain::waitForProcCompleted()
-{
-    fCondVal->lockForSync();
-
-    while (! fIsProcCompleted) {
-        fCondVal->wait();
+    // waiting for CSub queueing.
+    CMsg msg;
+    while(msg.getStr() != "ended") {
+        fQueueToMain.receive( &msg );
     }
-    fCondVal->unlockForSync();
+    ::std::cout << "CMain : received end-msg from CSub." << ::std::endl;
 }
 

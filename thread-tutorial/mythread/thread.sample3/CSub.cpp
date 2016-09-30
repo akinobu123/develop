@@ -3,32 +3,20 @@
 #include "CMsg.h"
 
 // constructors & destructor
-CSub::CSub( ICallbackReceiver *callbackReceiver, CQueue* queue )
-    : fThread(0)
-    , fCallbackReceiver(callbackReceiver)
-    , fQueue(queue)
+CSub::CSub(CQueue* queueToSub, CQueue* queueToMain )
+    : CThread("CSub")
+    , fQueueToSub(queueToSub)
+    , fQueueToMain(queueToMain)
 {
 }
 
 CSub::~CSub()
 {
-    if (fThread != 0) {
-        fThread->join();
-        delete fThread;
-    }
-}
-
-// CSub's method
-// async process.
-void CSub::startProc()
-{
-    fThread = CThread::createInstance(this, "");
-    fThread->start();
 }
 
 // public member functions
 // IRunnable's method
-void CSub::run()
+void* CSub::run()
 {
     // sub process
     
@@ -36,7 +24,7 @@ void CSub::run()
         sleep(1);
         
         CMsg msg;
-        fQueue->receive( &msg );
+        fQueueToSub->receive( &msg );
         ::std::cout << msg.getStr() << ::std::endl;
     }
 
@@ -44,10 +32,13 @@ void CSub::run()
         sleep(2);
         
         CMsg msg;
-        fQueue->receive( &msg );
+        fQueueToSub->receive( &msg );
         ::std::cout << msg.getStr() << ::std::endl;
     }
     
-    fCallbackReceiver->onProcCompleted();
+    CMsg msg("ended");
+    fQueueToMain->send( msg );
+
+    return NULL;
 }
 

@@ -6,7 +6,7 @@
 #include "CCondVal.h"
 
 
-class CMain : public CSub::ICallbackReceiver
+class CMain
 {
 public:
     CMain();
@@ -15,16 +15,9 @@ public:
     // CMain's method
     void execute();
 
-    // CSub::ICallbackReceiver's method
-    virtual void onProcCompleted();
-    
 private:
-    void waitForProcCompleted();
-
-private:
-    bool fIsProcCompleted;
-    CQueue fQueue;
-    CCondVal *fCondVal;
+    CQueue fQueueToSub;
+    CQueue fQueueToMain;
     CSub *fSub;
 };
 
