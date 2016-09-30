@@ -6,7 +6,7 @@ class IRunnable
 public:
     virtual ~IRunnable() { }
 
-    virtual void run() = 0;
+    virtual void* run() = 0;
 };
 
 #endif /* _I_RUNNABLE_H */

@@ -37,9 +37,9 @@ void CThreadUseRunnable::join()
     assert( ret == 0 );
 }
 
-void *CThreadUseRunnable::func(void *arg)
+void* CThreadUseRunnable::func(void *arg)
 {
      CThreadUseRunnable *thread = (CThreadUseRunnable *)arg;
-     thread->fRunnable->run();
+     return thread->fRunnable->run();
 }
 

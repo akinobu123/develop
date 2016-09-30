@@ -16,7 +16,7 @@ public:
     void join();
 
 private:
-    static void *func(void *arg);
+    static void* func(void *arg);
 
 private:
     IRunnable *fRunnable;
