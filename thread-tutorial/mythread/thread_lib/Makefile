@@ -2,8 +2,8 @@
 
 # macros
 CC       = g++
-CFLAGS   = -pthread -shared -fPIC
-LDFLAGS  =
+CFLAGS   = -pthread
+LDFLAGS  = -shared -fPIC
 INCLUDES =
 LIBS     =
 TARGET   = libthread.so
