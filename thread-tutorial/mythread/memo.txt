@@ -1,19 +1,22 @@
 ◆スレッドライブラリ(C++ラッパー)のコンパイル方法
-　./thread_lib/ディレクトリに行ってコンパイルし
-　libthread.soをパス(LD_LIBRARY_PATH)の通ったディレクトリへコピーする。
+　(1) ./thread_lib/ディレクトリに行ってmake
 
-　g++ -pthread -shared -fPIC *.cpp -o libthread.so; cp libthread.so ~/lib/
+　　　cd thread_lib
+　　　make
+
+　(2) libthread.soをパス(LD_LIBRARY_PATH)の通った(通す)ディレクトリへコピーする。
 
 
 ◆チュートリアルプログラムのコンパイル方法
-　./thread.tutorial*/ディレクトリに行ってコンパイル。
+　(1) ./thread.sample*/ディレクトリに行ってmake
 
-　g++ -I../thread_lib/ -L../thread_lib/ -pthread *.cpp -o tutorial.o -lthread
+　　　cd thread.sample*
+　　　make
 
 
 ◆実行方法
 　必要に応じて実行する前にlibのパスを通し、実行
 
-　export LD_LIBRARY_PATH=~/lib/
-　./tutorial.o
+　export LD_LIBRARY_PATH=~/lib/     <- 例
+　./sample*.out
 
