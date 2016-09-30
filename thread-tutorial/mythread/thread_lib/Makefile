@@ -2,13 +2,13 @@
 
 # macros
 CC       = g++
-CFLAGS   = -pthread
+CFLAGS   = 
 LDFLAGS  = -pthread -shared -fPIC
 INCLUDES =
 LIBS     =
 TARGET   = libthread.so
-OBJS     = CThreadUseRunnable.o CMutex.o CMutexAuto.o \
-           CCondVal.o CQueue.o
+OBJS     = CMutex.o CMutexAuto.o CCondVal.o\
+           CQueue.o CThreadUseRunnable.o
 
 # rules
 all:	$(TARGET)
