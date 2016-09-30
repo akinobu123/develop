@@ -1,23 +1,25 @@
 # Makefile
 
 # macros
-CC       = g++
-CFLAGS   = 
-LDFLAGS  = -pthread -shared -fPIC
-INCLUDES =
-LIBS     =
-TARGET   = libthread.so
-OBJS     = CQueue.o CCondVal.\
-           CMutexAuto.o CMutex.o oCThreadUseRunnable.o
+SRCS      = CMutex.cpp CMutexAuto.cpp CCondVal.cpp\
+            CQueue.cpp CThreadUseRunnable.cpp
+OBJS      = $(SRCS:.cpp=.o)
+TARGET    = libthread.so
+CXX       = g++
+CXXFLAGS  =  -O3 -Wall -fPIC
+LDFLAGS   = -shared
+LIBS      = -pthread
 
 # rules
-all:	$(TARGET)
+all:	$(OBJS)
+	$(CXX) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
+	@echo done.
 
-$(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
+$(OBJS): $(SRCS)
+	$(CXX) $(CXXFLAGS) $(SRCS) -c
 
-.cpp.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+clean:
+	rm -rf *.o $(TARGET)
 
 
 CThreadUseRunnable.h: IRunnable.h

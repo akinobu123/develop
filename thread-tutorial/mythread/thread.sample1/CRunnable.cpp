@@ -33,12 +33,13 @@ CRunnable *CRunnable::createInstance(
 }
 
 // IRunnable's method
-void CRunnable::run()
+void* CRunnable::run()
 {
     while (! isTerminated()) {
         print();
         usleep(3); // for context switch.
     }
+    return NULL;
 }
 
 // private member function
