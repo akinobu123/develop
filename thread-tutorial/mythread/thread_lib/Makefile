@@ -3,7 +3,7 @@
 # macros
 CC       = g++
 CFLAGS   = -pthread
-LDFLAGS  = -shared -fPIC
+LDFLAGS  = -pthread -shared -fPIC
 INCLUDES =
 LIBS     =
 TARGET   = libthread.so
