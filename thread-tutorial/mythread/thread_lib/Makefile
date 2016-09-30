@@ -2,7 +2,7 @@
 
 # macros
 SRCS      = CMutex.cpp CMutexAuto.cpp CCondVal.cpp\
-            CQueue.cpp CThreadUseRunnable.cpp
+            CQueue.cpp CThread.cpp CThreadUseRunnable.cpp
 OBJS      = $(SRCS:.cpp=.o)
 TARGET    = libthread.so
 CXX       = g++
@@ -25,6 +25,7 @@ clean:
 
 CThreadUseRunnable.h: IRunnable.h
 CThreadUseRunnable.o: CThreadUseRunnable.h
+CThread.o: CThread.h
 CMutex.o: CMutex.h
 CMutexAuto.o: CMutexAuto.h
 CCondVal.o: CCondVal.h
