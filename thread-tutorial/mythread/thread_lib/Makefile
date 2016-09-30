@@ -7,8 +7,8 @@ LDFLAGS  = -pthread -shared -fPIC
 INCLUDES =
 LIBS     =
 TARGET   = libthread.so
-OBJS     = CMutex.o CMutexAuto.o CCondVal.o\
-           CQueue.o CThreadUseRunnable.o
+OBJS     = CQueue.o CCondVal.\
+           CMutexAuto.o CMutex.o oCThreadUseRunnable.o
 
 # rules
 all:	$(TARGET)
