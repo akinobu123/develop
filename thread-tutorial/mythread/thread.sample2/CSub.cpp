@@ -5,7 +5,8 @@
 
 // constructors & destructor
 CSub::CSub( ICallbackReceiver *callbackReceiver )
-    : fCallbackReceiver(callbackReceiver)
+    : CThread("CSub")
+    , fCallbackReceiver(callbackReceiver)
 {
 }
 
@@ -15,7 +16,7 @@ CSub::~CSub()
 
 // public member functions
 // IRunnable's method
-void CSub::run()
+void* CSub::run()
 {
     // sub process
     
@@ -27,5 +28,7 @@ void CSub::run()
     ::std::cout << "CSub:completed" << ::std::endl;
     
     fCallbackReceiver->onProcCompleted();
+
+    return NULL;
 }
 

@@ -23,7 +23,7 @@ public:
     virtual ~CSub();
 
     // CThread's method
-    virtual void run();
+    virtual void* run();
 
 private:
     ICallbackReceiver *fCallbackReceiver;
