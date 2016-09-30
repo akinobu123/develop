@@ -5,7 +5,7 @@
 
 #include <string>
 #include "CMutex.h"
-#include "CThread.h"
+#include "CThreadUseRunnable.h"
 
 class CRunnable : public IRunnable
 {
@@ -28,7 +28,7 @@ private:
     bool fIsTerminated;
     ::std::string fID;
     CMutex *fMutex;
-    CThread *fThread;
+    CThreadUseRunnable *fThread;
 
     void start();
 

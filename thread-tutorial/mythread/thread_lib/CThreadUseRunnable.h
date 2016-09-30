@@ -3,14 +3,14 @@
 
 #include "IRunnable.h"
 
-class CThread
+class CThreadUseRunnable
 {
 private:
-    CThread(IRunnable *runnable, const char *name);
+    CThreadUseRunnable(IRunnable *runnable, const char *name);
     
 public:
-    virtual ~CThread();
-    static CThread *createInstance(IRunnable *runnable, const char *name);
+    virtual ~CThreadUseRunnable();
+    static CThreadUseRunnable *createInstance(IRunnable *runnable, const char *name);
     
     void start();
     void join();

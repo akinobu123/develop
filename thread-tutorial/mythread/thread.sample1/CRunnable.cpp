@@ -12,7 +12,7 @@ CRunnable::CRunnable(
 , fMutex(mutex)
 , fThread(0)
 {
-    fThread = CThread::createInstance(this, "");
+    fThread = CThreadUseRunnable::createInstance(this, "");
 }
 
 CRunnable::~CRunnable()
